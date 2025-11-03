@@ -1,0 +1,76 @@
+﻿@model PagedList.IPagedList<_22dh114822_LTW.Models.Product>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Danh sách Sản phẩm</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "Products", FormMethod.Get))
+{
+    <p>
+        Tìm kiếm theo Tên: @Html.TextBox("searchString", ViewBag.SearchString as string)
+        <input type="submit" value="Search" class="btn btn-default" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @* Thay đổi cách hiển thị tiêu đề nếu cần sắp xếp *@
+            @Html.DisplayNameFor(model => model.First().Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ProductDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ProductPrice)
+        </th>
+        <th>
+            ProductImage
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductPrice)
+            </td>
+            <td>
+                @* Hiển thị ảnh *@
+                <img src="@Url.Content(item.ProductImage)" alt="Product Image" style="width: 50px; height: auto;" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) trên @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, searchString = ViewBag.SearchString }))

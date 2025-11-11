@@ -1,0 +1,26 @@
+﻿@model _22dh114822_LTW.Models.ViewModel.CheckoutVM
+
+@{
+    ViewBag.Title = "Xác nhận thanh toán PayPal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="padding: 50px 0;">
+    <h2>THANH TOÁN QUA PAYPAL</h2>
+    <hr />
+
+    <h3>Tổng quan đơn hàng</h3>
+    <p><strong>Tổng số tiền:</strong> @Model.TotalAmount</p>
+    <p><strong>Địa chỉ giao hàng:</strong> @Model.ShippingAddress</p>
+    <p>Bạn sắp được chuyển đến cổng thanh toán an toàn của PayPal.</p>
+
+    @using (Html.BeginForm("PaymentWithPaypal", "Paypal", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div style="margin-top: 20px;">
+            <input type="submit" value="Tiếp tục thanh toán" class="btn btn-success" />
+            <a href="@Url.Action("Checkout", "Order")" class="btn btn-default">Quay lại trang Checkout</a>
+        </div>
+    }
+</div>

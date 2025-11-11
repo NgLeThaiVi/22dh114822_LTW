@@ -1,0 +1,38 @@
+﻿@model _22dh114822_LTW.Models.ViewModel.Cart
+@*@model _22dh114822_LTW.Models.Product
+@model _22dh114822_LTW.Models.ViewModel.CartItem*@
+
+@using PagedList.Mvc
+@using PagedList
+
+<link rel="stylesheet" type="text/css" href="~/Content/MyStyle/CustomerHome.css" />
+
+@if (Model.SimilarProducts != null && Model.SimilarProducts.Any())
+{
+    <section class="@*container-fluid*@listProduct">
+        <h2>Sản phẩm tương tự</h2>
+        <ul class="list-container">
+            @foreach (var product in Model.SimilarProducts)
+            {
+                <li class="product-item">
+                    <div>
+                        <a href="@Url.Action("AddToCart", "Cart", new { id = product.ProductID })">
+                            <img src="@product.ProductImage" />
+                        </a>
+                    </div>
+                    <div class="prodName" style="min-height:168px;">@product.ProductName</div>
+                    <div class="prodPrice">@product.ProductPrice.ToString("N0") &nbsp;VNĐ</div>
+                    <div>
+                        @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "Cart",
+                            new { id = product.ProductID },
+                            new { @class = "btn btn-info" })
+                    </div>
+                </li>
+            }
+        </ul>
+    </section>
+}
+
+<div class="pagination-container">
+    @Html.PagedListPager(Model.SimilarProducts, page => Url.Action("Index", new { page = page }))
+</div>

@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="APIMatic.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\APIMatic.Core.0.4.13\lib\netstandard2.0\APIMatic.Core.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -151,6 +154,9 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Extensions.Primitives.8.0.0\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Json.Pointer, Version=2.3.0.0, Culture=neutral, PublicKeyToken=21a5e83f6f5bb844, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Json.Pointer.2.3.0\lib\net461\Microsoft.Json.Pointer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Net.Http.Headers, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Net.Http.Headers.2.3.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
     </Reference>
@@ -163,9 +169,21 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPalServerSDK, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\PayPalServerSDK.2.0.0\lib\netstandard2.0\PayPalServerSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Polly, Version=7.0.0.0, Culture=neutral, PublicKeyToken=c8a3ffc3f8f825cc, processorArchitecture=MSIL">
+      <HintPath>packages\Polly.7.2.3\lib\net472\Polly.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.6.0\lib\net462\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Collections.Immutable.7.0.0\lib\net462\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
@@ -263,7 +281,11 @@
     <Compile Include="Areas\Admin\Controllers\CustomersController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartControllers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\PayPalController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -288,6 +310,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyStoreModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\MyStoreModel1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyStoreModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Order.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
@@ -297,13 +324,27 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>MyStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModel\Cart.cs" />
+    <Compile Include="Models\ViewModel\CartItem.cs" />
+    <Compile Include="Models\ViewModel\CartService.cs" />
+    <Compile Include="Models\ViewModel\CheckOutVM.cs" />
+    <Compile Include="Models\ViewModel\HomeProductVM.cs" />
+    <Compile Include="Models\ViewModel\LoginVM.cs" />
+    <Compile Include="Models\ViewModel\PersonalMenuVM.cs" />
+    <Compile Include="Models\ViewModel\ProductDetailVM.cs" />
+    <Compile Include="Models\ViewModel\RegisterVM.cs" />
     <Compile Include="Models\ViewModel\SearchProductVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\all.css" />
+    <Content Include="Content\all.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -320,7 +361,22 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\brands.css" />
+    <Content Include="Content\brands.min.css" />
+    <Content Include="Content\fontawesome.css" />
+    <Content Include="Content\fontawesome.min.css" />
+    <Content Include="Content\images\BG.jpg" />
+    <Content Include="Content\images\EM.jpg" />
+    <Content Include="Content\myStyle\CustomerHome.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\regular.css" />
+    <Content Include="Content\regular.min.css" />
+    <Content Include="Content\solid.css" />
+    <Content Include="Content\solid.min.css" />
+    <Content Include="Content\svg-with-js.css" />
+    <Content Include="Content\svg-with-js.min.css" />
+    <Content Include="Content\v4-shims.css" />
+    <Content Include="Content\v4-shims.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -336,7 +392,7 @@
     </Content>
     <EntityDeploy Include="Models\MyStoreModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MyStoreModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>MyStoreModel1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\MyStoreModel.edmx.diagram">
       <DependentUpon>MyStoreModel.edmx</DependentUpon>
@@ -365,6 +421,22 @@
     <Content Include="Areas\Admin\Views\Customers\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Customers\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Customers\Index.cshtml" />
+    <Content Include="Scripts\fontawesome\all.js" />
+    <Content Include="Scripts\fontawesome\all.min.js" />
+    <Content Include="Scripts\fontawesome\brands.js" />
+    <Content Include="Scripts\fontawesome\brands.min.js" />
+    <Content Include="Scripts\fontawesome\conflict-detection.js" />
+    <Content Include="Scripts\fontawesome\conflict-detection.min.js" />
+    <Content Include="Scripts\fontawesome\fontawesome.js" />
+    <Content Include="Scripts\fontawesome\fontawesome.min.js" />
+    <Content Include="Scripts\fontawesome\regular.js" />
+    <Content Include="Scripts\fontawesome\regular.min.js" />
+    <Content Include="Scripts\fontawesome\solid.js" />
+    <Content Include="Scripts\fontawesome\solid.min.js" />
+    <Content Include="Scripts\fontawesome\v4-shims.js" />
+    <Content Include="Scripts\fontawesome\v4-shims.min.js" />
+    <Content Include="Views\Shared\_PVFeatureProduct.cshtml" />
+    <Content Include="Views\Shared\_PVNewProduct.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -387,15 +459,40 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\ProductDetails.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_PVTopProduct.cshtml" />
+    <Content Include="Views\Shared\_PVRelatedProduct.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Cart\Index2.cshtml" />
+    <Content Include="Views\Shared\_PVSimilarProduct.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Order\Checkout.cshtml" />
+    <Content Include="Views\Order\OrderSuccess.cshtml" />
+    <Content Include="Views\PayPal\Index.cshtml" />
+    <Content Include="webfonts\fa-brands-400.svg" />
+    <Content Include="webfonts\fa-regular-400.svg" />
+    <Content Include="webfonts\fa-solid-900.svg" />
+    <Content Include="webfonts\fa-solid-900.woff2" />
+    <Content Include="webfonts\fa-solid-900.woff" />
+    <Content Include="webfonts\fa-solid-900.ttf" />
+    <Content Include="webfonts\fa-solid-900.eot" />
+    <Content Include="webfonts\fa-regular-400.woff2" />
+    <Content Include="webfonts\fa-regular-400.woff" />
+    <Content Include="webfonts\fa-regular-400.ttf" />
+    <Content Include="webfonts\fa-regular-400.eot" />
+    <Content Include="webfonts\fa-brands-400.woff2" />
+    <Content Include="webfonts\fa-brands-400.woff" />
+    <Content Include="webfonts\fa-brands-400.ttf" />
+    <Content Include="webfonts\fa-brands-400.eot" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Home\" />
-    <Folder Include="Content\images\" />
+    <Folder Include="Views\CartControllers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

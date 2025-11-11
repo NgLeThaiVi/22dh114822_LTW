@@ -1,4 +1,7 @@
 ﻿/* Set padding to keep content from hitting the edges */
+body {
+    padding-top: 50px;
+}
 .body-content {
     margin-top: 15px;
     padding-left: 15px;

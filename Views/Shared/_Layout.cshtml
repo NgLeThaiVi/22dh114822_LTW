@@ -1,39 +1,145 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@{
+    var Cart = Session["Cart"] as _22dh114822_LTW.Models.ViewModel.Cart;
+
+    // Tạo đối tượng PersonalMenuVM và lưu trong ViewBag,
+    // khởi tạo giá trị dựa trên thông tin tài khoản đăng nhập
+    ViewBag.PMenu = new _22dh114822_LTW.Models.ViewModel.PersonalMenuVM
+    {
+        IsLoggedIn = User.Identity.IsAuthenticated,
+        Username = User.Identity.IsAuthenticated ? User.Identity.Name : string.Empty
+    };
+
+    // Nếu giỏ hàng không rỗng thì gán số lượng mặt hàng trong giỏ cho CartCount
+    if (Cart != null && Cart.Items.Any())
+    {
+        ViewBag.PMenu.CartCount = Cart.Items.Count();
+    }
+}
+<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - My Store</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        /* Basic styling for the menu */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        li {
+            margin-right: 20px;
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #f1f1f1;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
+        <div class="navbar navbar-default navbar-fixed-top">
+            <header class="container" style="background-color:Lightgreen;">
+                <h4 style="text-align:center; color:green;">
+                    Free ship đơn từ 400K, giảm nhiều hơn cùng
+                    <span style="font-weight:bolder; font-style:italic;">
+                        <span style="color:blue;">FREESHIP</span>
+                    </span>
+                    <span style="color:blue;">XTRA</span>
+                </h4>
+            </header>
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+                        <img src="~/Content/images/BG.jpg" style="max-height:30px;" />
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <div style="position:relative;">
+                                <i class="fas fa-home"></i>@Html.ActionLink("Trang chủ", "Index", "Home")
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <div style="position:relative;">
+                                <i class="fas fa-user"></i>
+                                <a href="#" class="dropdown-toggle" id="account-name"
+                                   @if (ViewBag.PMenu.IsLoggedIn) { <text> data-toggle="dropdown" </text> }>
+                                    @if (ViewBag.PMenu.IsLoggedIn)
+                                    {
+                                        <text>Hello, </text>@ViewBag.PMenu.Username
+                                    }
+                                    else
+                                    {
+                                        <text>Tài khoản</text>
+                                    }
+                                </a>
+                            </div>
+                            <div class="dropdown-content">
+                                @if (ViewBag.PMenu.IsLoggedIn)
+                                {
+                                    <a href="@Url.Action("Profile", "Account")">Thông tin tài khoản</a>
+                                    <a href="@Url.Action("OrderHistory", "Order")">Lịch sử mua hàng</a>
+                                    <a href="@Url.Action("Logout", "Account")">Đăng xuất</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Register", "Account")">Đăng ký</a>
+                                    <a href="@Url.Action("Login", "Account")">Đăng nhập</a>
+                                }
+                            </div>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Cart")">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span id="cart-count">@ViewBag.PMenu.CartCount</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
 </html>

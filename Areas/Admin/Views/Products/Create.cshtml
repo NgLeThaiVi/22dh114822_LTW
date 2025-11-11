@@ -49,10 +49,10 @@
         </div>
 
         <div class="form-group">
-            @* Sử dụng nhãn cho ProductImage nhưng trường nhập liệu là UploadImg *@
+            @* Trường upload file *@
             @Html.LabelFor(model => model.ProductImage, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @* Thay thế EditorFor bằng TextBoxFor với type="file" để upload ảnh *@
+                @* Đảm bảo liên kết với UploadImg *@
                 @Html.TextBoxFor(model => model.UploadImg, new { type = "file", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.UploadImg, "", new { @class = "text-danger" })
             </div>

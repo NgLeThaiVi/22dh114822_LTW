@@ -1,0 +1,34 @@
+﻿@model _22dh114822_LTW.Models.ViewModel.ProductDetailVM
+@using PagedList.Mvc
+
+<link rel="stylesheet" type="text/css" href="~/Content/MyStyle/CustomerHome.css" />
+
+@if (Model.TopProducts != null && Model.TopProducts.Any())
+{
+    <section class="container-fluid listProduct">
+        <h4 style="font-weight:bold;">Sản phẩm bán chạy</h4>
+        <ul class="list-container">
+            @foreach (var product in Model.TopProducts)
+            {
+                <li class="lproduct-item">
+                    <div>
+                        <a href="@Url.Action("ProductDetails", "Home", new { id = product.ProductID })">
+                            <img src="@Html.DisplayFor(modelItem => product.ProductImage)" />
+                        </a>
+                    </div>
+                    <h5>@Html.DisplayFor(modelItem => product.ProductName)</h5>
+                    <p class="prodSale">@Html.DisplayFor(modelItem => product.ProductPrice)</p>
+                </li>
+            }
+        </ul>
+    </section>
+
+    <div class="pagination-container">
+        @Html.PagedListPager(Model.TopProducts, page => Url.Action("ProductDetails", new
+           {
+               id = Model.product.ProductID,
+               quantity = Model.quantity,
+               page
+           }))
+    </div>
+}

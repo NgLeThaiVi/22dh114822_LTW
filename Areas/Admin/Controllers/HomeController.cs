@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _22dh114822_LTW.Models.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace _22dh114822_LTW.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index()
         {
+            var model = new HomeProductVM(); // Phải có
             return View();
         }
     }
